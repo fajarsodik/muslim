@@ -1,12 +1,13 @@
-import { Children, Fragment } from "react";
 import "./App.css";
 
 const App = ({ children }) => {
   return (
-    <div>
-      <p>test</p>
-      {children}
-      <p>test</p>
+    <div className="container mt-4">
+      <div className="flex w-full flex-col">
+        <h1 className="text-3xl">Jadwal Sholat Wilayah</h1>
+        <h2>Nama Wilayah</h2>
+        {children}
+      </div>
     </div>
   );
 };
