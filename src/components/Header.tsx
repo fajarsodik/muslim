@@ -1,4 +1,3 @@
-import DailySchedule from "./DailySchedulePrayTime";
 import PrayerTimes from "./PrayerTimes";
 
 const Header = () => {

@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useStore } from "../stores/store";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import requestNotificationPermission from "../hooks/useNotification";
-import getPrayerTimes from "../utils/getPrayerTimes";
+import {getPrayerTimes} from "../utils/getPrayerTimes";
 
 const PrayerTimes = () => {
   const {
     prayerTimes,
     isAlarmActive,
-    toggleAlarm,
+    // toggleAlarm,
     selectedCity,
     setPrayerTimes,
   } = useStore();
 
-  const alarmNotification = (prayer: string) => {
-    if (isAlarmActive) {
-      // Menampilkan notifikasi menggunakan Web Notifications API
-      if (Notification.permission === "granted") {
-        new Notification(`Waktunya Sholat ${prayer}`, {
-          body: `Jangan lupa untuk melaksanakan sholat ${prayer}`,
-          icon: "/assets/icon.png", // Gambar untuk notifikasi
-        });
-      } else {
-        toast.info(`Waktunya Sholat ${prayer}`, {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 5000,
-        });
-      }
-    }
-  };
+  // const alarmNotification = (prayer: string) => {
+  //   if (isAlarmActive) {
+  //     // Menampilkan notifikasi menggunakan Web Notifications API
+  //     if (Notification.permission === "granted") {
+  //       new Notification(`Waktunya Sholat ${prayer}`, {
+  //         body: `Jangan lupa untuk melaksanakan sholat ${prayer}`,
+  //         icon: "/assets/icon.png", // Gambar untuk notifikasi
+  //       });
+  //     } else {
+  //       toast.info(`Waktunya Sholat ${prayer}`, {
+  //         position: toast.POSITION.TOP_CENTER,
+  //         autoClose: 5000,
+  //       });
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +49,6 @@ const PrayerTimes = () => {
     return () => clearInterval(interval);
   }, [isAlarmActive]);
   if (prayerTimes) {
-    console.log(prayerTimes);
     if (prayerTimes.timings) {
       return (
         <div>

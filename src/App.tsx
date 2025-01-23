@@ -3,7 +3,11 @@ import "./App.css";
 import CityDropdown from "./components/CityDropdown";
 import { useStore } from "./stores/store";
 
-const App = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const App = ({ children }: Props) => {
   const { selectedCity } = useStore();
 
   return (

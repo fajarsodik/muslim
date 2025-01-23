@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useStore } from "../stores/store";
-import getPrayerTimes from "../utils/getPrayerTimes";
+import { getPrayerTimes } from "../utils/getPrayerTimes";
 
 const CityDropdown = () => {
   const { selectedCity, setCity, setPrayerTimes } = useStore();
