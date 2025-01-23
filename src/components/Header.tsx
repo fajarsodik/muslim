@@ -1,4 +1,5 @@
 import DailySchedule from "./DailySchedulePrayTime";
+import PrayerTimes from "./PrayerTimes";
 
 const Header = () => {
   return (
@@ -11,7 +12,7 @@ const Header = () => {
         aria-label="Today"
       />
       <div role="tabpanel" className="tab-content p-10">
-        <DailySchedule />
+        <PrayerTimes />
       </div>
 
       <input

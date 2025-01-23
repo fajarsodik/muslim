@@ -2,9 +2,16 @@ import React, { useEffect } from "react";
 import { useStore } from "../stores/store";
 import { toast } from "react-toastify";
 import requestNotificationPermission from "../hooks/useNotification";
+import getPrayerTimes from "../utils/getPrayerTimes";
 
 const PrayerTimes = () => {
-  const { prayerTimes, isAlarmActive, toggleAlarm } = useStore();
+  const {
+    prayerTimes,
+    isAlarmActive,
+    toggleAlarm,
+    selectedCity,
+    setPrayerTimes,
+  } = useStore();
 
   const alarmNotification = (prayer: string) => {
     if (isAlarmActive) {
@@ -24,6 +31,11 @@ const PrayerTimes = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const times = await getPrayerTimes(selectedCity);
+      setPrayerTimes(times);
+    };
+    fetchData();
     // Meminta izin notifikasi saat komponen pertama kali dimuat
     requestNotificationPermission().then((isGranted) => {
       if (isGranted) {
@@ -32,39 +44,29 @@ const PrayerTimes = () => {
         console.log("Notifikasi tidak diizinkan!");
       }
     });
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const prayerNames = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
-      prayerNames.forEach((prayer) => {
-        const prayerTime = new Date(prayerTimes[prayer]);
-        if (
-          prayerTime.getHours() === now.getHours() &&
-          prayerTime.getMinutes() === now.getMinutes()
-        ) {
-          alarmNotification(prayer);
-        }
-      });
-    }, 60000); // periksa setiap menit
+    const interval = setInterval(() => {}, 60000);
 
     return () => clearInterval(interval);
-  }, [prayerTimes, isAlarmActive]);
-
-  return (
-    <div>
-      <h3>Prayer Times</h3>
-      <ul>
-        {Object.keys(prayerTimes).map((prayer) => (
-          <li key={prayer}>
-            {prayer}: {prayerTimes[prayer]}
-          </li>
-        ))}
-      </ul>
-      <button onClick={toggleAlarm}>
-        {isAlarmActive ? "Stop Alarm" : "Start Alarm"}
-      </button>
-    </div>
-  );
+  }, [isAlarmActive]);
+  if (prayerTimes) {
+    console.log(prayerTimes);
+    if (prayerTimes.timings) {
+      return (
+        <div>
+          <h4>Subuh: {prayerTimes.timings.Fajr}</h4>
+          <h4>Dzuhur: {prayerTimes.timings.Dhuhr}</h4>
+          <h4>Ashar: {prayerTimes.timings.Asr}</h4>
+          <h4>Maghrib: {prayerTimes.timings.Maghrib}</h4>
+          <h4>Isya: {prayerTimes.timings.Isha}</h4>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <span className="loading loading-dots loading-md"></span>
+      </div>
+    );
+  }
 };
 
 export default PrayerTimes;

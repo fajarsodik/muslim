@@ -5,7 +5,7 @@ interface Store {
   prayerTimes: any;
   isAlarmActive: boolean;
   setCity: (city: string) => void;
-  setPrayerTimes: (times: any) => void;
+  setPrayerTimes: (times: Record<string, string>) => void;
   toggleAlarm: () => void;
 }
 
@@ -14,6 +14,7 @@ export const useStore = create<Store>((set) => ({
   prayerTimes: {},
   isAlarmActive: false,
   setCity: (city: string) => set({ selectedCity: city }),
-  setPrayerTimes: (times: any) => set({ prayerTimes: times }),
+  setPrayerTimes: (times: Record<string, string>) =>
+    set({ prayerTimes: times }),
   toggleAlarm: () => set((state) => ({ isAlarmActive: !state.isAlarmActive })),
 }));
