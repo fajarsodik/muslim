@@ -1,3 +1,4 @@
+import PrayerTimeMonthly from "./PrayerTimeMonthly";
 import PrayerTimes from "./PrayerTimes";
 
 const Header = () => {
@@ -23,7 +24,7 @@ const Header = () => {
         defaultChecked
       />
       <div role="tabpanel" className="tab-content p-10">
-        Tab content 2
+        <PrayerTimeMonthly />
       </div>
     </div>
   );
